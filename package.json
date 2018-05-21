@@ -1,0 +1,11 @@
+{
+  "name": "news_portal",
+  "version": "1.0.0",
+  "description": "News portal developed in node.js",
+  "main": "noticias.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luis",
+  "license": "ISC"
+}
