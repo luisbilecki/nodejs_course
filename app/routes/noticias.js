@@ -1,15 +1,9 @@
+const dbConnection = require('../../config/dbConnection');
+
 module.exports = function(app){
+  let connection = dbConnection();
+
   app.get('/noticias', function(req,res){
-
-      var mysql = require('mysql');
-
-      var connection = mysql.createConnection({
-          host: 'localhost',
-          user: 'nodejs',
-          password: 'nodejs',
-          database: 'portal_noticias'
-      });
-      
       connection.query("SELECT * FROM noticias", function(error, result){
         res.render('noticias/noticias', { noticias : result });
       });
