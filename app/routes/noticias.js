@@ -9,11 +9,9 @@ module.exports = function(app){
           password: 'nodejs',
           database: 'portal_noticias'
       });
-
+      
       connection.query("SELECT * FROM noticias", function(error, result){
-          res.send(result);
+        res.render('noticias/noticias', { noticias : result });
       });
-
-      //res.render('noticias/noticias');
   });
 }
