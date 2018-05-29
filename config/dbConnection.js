@@ -1,6 +1,8 @@
 let mysql = require('mysql');
 
-module.exports = function() {
+let mysqlConnection = function() {
+  console.log('DB connection established!');
+  
   return mysql.createConnection({
     host: 'localhost',
     user: 'nodejs',
@@ -8,3 +10,8 @@ module.exports = function() {
     database: 'portal_noticias'
   });
 }  
+
+module.exports = function() {
+  console.log('Consign loads the db connection module');
+  return mysqlConnection;
+}
