@@ -9,3 +9,8 @@ CREATE TABLE noticias(
 );
 
 INSERT INTO noticias(titulo,noticia) VALUES ('titulo da noticia', 'descrição da noticia');
+
+ALTER TABLE `portal_noticias`.`noticias` 
+ADD COLUMN `resumo` VARCHAR(100) NULL AFTER `data_criacao`,
+ADD COLUMN `autor` VARCHAR(30) NULL AFTER `resumo`,
+ADD COLUMN `data_noticia` DATE NULL AFTER `autor`;
