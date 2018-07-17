@@ -1,5 +1,5 @@
 const app = require('./config/server');
 
-app.listen(80, function(){
+app.listen(8080, function(){
     console.log('Servidor online');
 })

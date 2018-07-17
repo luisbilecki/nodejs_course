@@ -18,5 +18,4 @@ consign()
     .then('app/controllers')
     .into(app);
 
-/* exportar o objeto app */
 module.exports = app;
