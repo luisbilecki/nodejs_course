@@ -1,5 +1,7 @@
 const app = require('./config/server');
 
-app.listen(8080, function(){
+let server = app.listen(8080, function(){
     console.log('Servidor online');
 })
+
+require('socket.io').listen(server);
