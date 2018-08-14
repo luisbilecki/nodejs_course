@@ -21,7 +21,7 @@ const cadastrar = (application, req, res) => {
   console.log(connection);
   const UsuariosDAO = new application.app.models.UsuariosDAO(connection);
 
-  UsuariosDAO.inserirUsuario(dadosForm);
+  UsuariosDAO.inserirUsuario(dadosForm, res);
   
   res.send('podemos cadastrar');
 }
