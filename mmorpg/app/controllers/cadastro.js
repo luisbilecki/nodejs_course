@@ -1,8 +1,8 @@
-const cadastro = (app, req, res) => {
+const cadastro = (application, req, res) => {
   res.render('cadastro', { validacao: {}, dadosForm: {} });
 };
 
-const cadastrar = (app, req, res) => {    
+const cadastrar = (application, req, res) => {    
   const dadosForm = req.body;
 
   req.assert('nome', 'Nome não pode ser vazio').notEmpty();
@@ -17,6 +17,12 @@ const cadastrar = (app, req, res) => {
       return;
   }
 
+  const connection = application.config.dbConnection;
+  console.log(connection);
+  const UsuariosDAO = new application.app.models.UsuariosDAO(connection);
+
+  UsuariosDAO.inserirUsuario(dadosForm);
+  
   res.send('podemos cadastrar');
 }
 module.exports = { 

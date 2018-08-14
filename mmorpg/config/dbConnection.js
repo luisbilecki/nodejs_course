@@ -1,15 +1,19 @@
 const mongo = require('mongodb');
 
-module.exports = function(){
+const connMongoDB = function(){
   const db = new mongo.Db(
-      'got',
-      new mongo.Server(
-          'localhost',
-          27017, 
-          {}
-      ),
+    'got',
+    new mongo.Server(
+      'localhost',
+      27017,
       {}
+    ),
+    {}
   );
 
   return db;
+}
+
+module.exports = () => {
+  return connMongoDB;
 }

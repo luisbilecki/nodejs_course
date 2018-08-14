@@ -1,4 +1,4 @@
-const index = (app, req, res) => {
+const index = (application, req, res) => {
   res.render('index');
 };
 
