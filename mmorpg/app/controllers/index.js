@@ -1,5 +1,5 @@
 const index = (application, req, res) => {
-  res.render('index');
+  res.render('index', { validacao: {} });
 };
 
 const autenticar = (application, req, res) => {    
