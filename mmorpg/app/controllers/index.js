@@ -15,8 +15,10 @@ const autenticar = (application, req, res) => {
       return;
   }
 
-  res.send('tudo ok para criar a sessão');
+  const connection = application.config.dbConnection;
+  const UsuariosDAO = new application.app.models.UsuariosDAO(connection);
 
+  UsuariosDAO.autenticar(dadosForm, req, res);
 }
 
 module.exports = { 
