@@ -6,4 +6,13 @@ const jogo = (app, req, res) => {
   }
 };
 
-module.exports = { jogo };
+const sair = (app, req, res) => {
+  req.session.destroy(function(err){
+    res.render('index', { validacao: {} });
+  });
+};
+
+module.exports = { 
+  jogo,
+  sair,
+};
