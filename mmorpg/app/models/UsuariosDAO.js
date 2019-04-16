@@ -1,11 +1,18 @@
+const crypto = require('crypto');
+
 function UsuariosDAO(connection){
   this._connection = connection();
 }
 
 UsuariosDAO.prototype.inserirUsuario = (usuario) => {
   this._connection.open((err, mongoclient) => {
-    mongoclient.collection('usuarios', function(err, collection) {
+    mongoclient.collection('usuarios', function(err, collection) {      
+      const senha_criptografada = crypto.createHash('md5').update(usuario.senha).digest('hex');
+
+      usuario.senha = senha_criptografada;
+
       collection.insert(usuario);
+      
       mongoclient.close();
     });
   });
@@ -14,6 +21,10 @@ UsuariosDAO.prototype.inserirUsuario = (usuario) => {
 UsuariosDAO.prototype.autenticar = (usuario, req, res) => {
   this._connection.open((err, mongoclient) => {
       mongoclient.collection('usuarios', (err, collection) => {
+        
+        const senha_criptografada = crypto.createHash('md5').update(usuario.senha).digest('hex');
+        usuario.senha = senha_criptografada;
+
           collection.find(usuario).toArray((err, result) => {              
               if(result[0] != undefined){ 
                   req.session.autorizado = true;
