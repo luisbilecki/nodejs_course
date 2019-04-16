@@ -18,7 +18,16 @@ const sair = (app, req, res) => {
   });
 };
 
+const suditos = (app, req, res) => {
+  res.render('aldeoes', { validacao: {} });
+}
+
+const pergaminhos = (app, req, res) => {
+  res.render('pergaminhos', { validacao: {} });
+}
 module.exports = { 
   jogo,
   sair,
+  suditos,
+  pergaminhos,
 };
