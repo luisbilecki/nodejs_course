@@ -62,7 +62,7 @@ app.post('/api', (req, res) => {
       operation: 'insert',
       reqData: dataToInsert,
       collection: 'posts',
-      callback: function(err, records){
+      callback: (err, records) => {
         if (err) {
           res.json({ status: 'erroed', err });
         } else {
@@ -73,13 +73,30 @@ app.post('/api', (req, res) => {
   });
 });
 
+app.get('/api/imagens/:imagem', (req, res) => {
+  const img = req.params.imagem;
+
+  fs.readFile('./uploads/' + img, (err, content) => {
+    if(err){
+      const err = boom.badRequest(err).output;
+      res.status(err.statusCode);
+      res.json(err.payload);
+      
+      return;
+    }
+
+    res.writeHead(200, { 'content-type' : 'image/jpg' });
+    res.end(content);
+  });
+});
+
 // GET (find)
 app.get('/api', (req, res) => {
   connMongoDB({
     operation: 'find',
     reqData: {},
     collection: 'posts',
-    callback: function(err, records){
+    callback: (err, records) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
@@ -96,7 +113,7 @@ app.get('/api/:id', (req, res) => {
     operation: 'find',
     reqData: objectID(req.params.id),
     collection: 'posts',
-    callback: function(err, records){
+    callback: (err, records) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
@@ -121,7 +138,7 @@ app.put('/api/:id', (req, res) => {
     where: { _id: objectID(req.params.id) },
     set: { $set: { titulo: req.body.titulo }},
     collection: 'posts',
-    callback: function(err, records){
+    callback: (err, records) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
@@ -137,7 +154,7 @@ app.delete('/api/:id', (req, res) => {
     operation: 'delete',
     where: { _id: req.params.id },
     collection: 'posts',
-    callback: function(err){
+    callback: (err) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
