@@ -24,16 +24,10 @@ console.log('Server listening on ' + port);
 // CORS
 const cors = require('cors');
 app.use(cors({
-  origin: ['*'], // In production we should change this to frontend url
+  origin: '*', // In production we should change this to frontend url
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  credentials: true,
 }));
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
 
 // GET (hello)
 app.get('/', (req, res) => {
@@ -77,10 +71,10 @@ app.get('/api/imagens/:imagem', (req, res) => {
   const img = req.params.imagem;
 
   fs.readFile('./uploads/' + img, (err, content) => {
-    if(err){
-      const err = boom.badRequest(err).output;
-      res.status(err.statusCode);
-      res.json(err.payload);
+    if (err) {
+      const boomifiedErr = boom.badRequest(err).output;
+      res.status(boomifiedErr.statusCode);
+      res.json(boomifiedErr.payload);
       
       return;
     }
@@ -136,7 +130,15 @@ app.put('/api/:id', (req, res) => {
   connMongoDB({
     operation: 'update',
     where: { _id: objectID(req.params.id) },
-    set: { $set: { titulo: req.body.titulo }},
+    set: { 
+      $push: { 
+        comentarios: {
+          id_comentario: new objectID(),
+          comentario: req.body.comentario,
+          ts: new Date().getTime(),
+        }
+      }
+    },
     collection: 'posts',
     callback: (err, records) => {
       if (err) {
