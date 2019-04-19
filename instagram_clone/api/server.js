@@ -44,11 +44,11 @@ app.get('/api', (req, res) => {
     operation: 'find',
     reqData: {},
     collection: 'posts',
-    callback: function(err, results){
+    callback: function(err, records){
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
-        res.json({ posts: results });
+        res.json({ posts: records });
       }
     }
   });
@@ -60,12 +60,30 @@ app.get('/api/:id', (req, res) => {
     operation: 'find',
     reqData: objectID(req.params.id),
     collection: 'posts',
-    callback: function(err, results){
+    callback: function(err, records){
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
-        res.json(results);
+        res.json(records);
       }
     }
   });
 });
+
+// PUT By id
+app.put('/api/:id', (req, res) => {
+  connMongoDB({
+    operation: 'update',
+    where: { _id: objectID(req.params.id) },
+    set: { $set: { titulo: req.body.titulo }},
+    collection: 'posts',
+    callback: function(err, records){
+      if (err) {
+        res.json({ status: 'erroed', err });
+      } else {
+        res.json({ status: 'post updated successfully' });
+      }
+    }
+  });
+});
+
