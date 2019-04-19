@@ -52,6 +52,7 @@
                   for(let j = 0; j < comentarios.length; j++) {
                     $('#comentarios_' + data[i]._id).append([
                       '<div class="comentario">',
+												'<button type="button" value="' + comentarios[j].id_comentario + '" class="btn btn-default btn_remover_postagem">X</button>',
                         '<div class="comentario texto">',
                           comentarios[j].comentario,
                         '</div>',
@@ -65,13 +66,13 @@
               }              
               
 
-							$('.btn_postagem').click(function(){
+							$('.btn_postagem').click(function() {
 								let id = this.value;
 								let id_input_comentario = 'postagem_' + id;
                 let comentario = $('#'+id_input_comentario).val();                
 								
 								let xhr = new XMLHttpRequest();
-                xhr.open('PUT', 'http://localhost:8080/api/' + id);
+                xhr.open('PUT', `http://localhost:8080/api/${id}`);
                 xhr.setRequestHeader('Content-Type', 'application/json');
 
                 xhr.onload = function() {
@@ -81,6 +82,22 @@
                 };
 
 								xhr.send(JSON.stringify({ comentario }));
+              });
+              
+              $(".btn_remover_postagem").click(function() {
+								let id_comentario = this.value;
+
+								let xhr = new XMLHttpRequest();
+								xhr.open('DELETE', `http://localhost:8080/api/comentarios/${id_comentario}`);
+
+								xhr.onload = function() {
+									if (xhr.status === 204) {
+										window.location.href = '/home';
+									}
+								};
+
+								xhr.send();
+
 							});
 						}
 					}

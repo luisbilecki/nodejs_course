@@ -10,7 +10,7 @@ const query = (db, data) => {
 
   switch (data.operation) {
     case 'update':
-      collection.updateOne(data.where, data.set, data.callback);
+      collection.update(data.where, data.set, data.options, data.callback);
       break;
     case 'insert':
       collection.insertOne(data.reqData, data.callback);

@@ -166,3 +166,28 @@ app.delete('/api/:id', (req, res) => {
     }
   });
 });
+
+// DELETE Comment By id
+app.delete('/api/comentarios/:id', (req, res) => {
+  connMongoDB({
+    operation: 'update',
+    where: {},
+    set: { 
+      $pull : {
+        comentarios : {
+          id_comentario : objectID(req.params.id)
+        }
+      }
+    },
+    options: { multi: true },
+    collection: 'posts',
+    callback: (err) => {
+      if (err) {
+        res.json({ status: 'erroed', err });
+      } else {
+        res.status(204);
+        res.json({ status: 'comment deleted successfully' });
+      }
+    }
+  });
+});
