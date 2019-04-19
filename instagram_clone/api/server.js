@@ -4,6 +4,9 @@ const express = require('express'),
 const { connMongoDB } = require('./db');
 const objectID = require('mongodb').ObjectId;
 
+const { isEmpty } = require('lodash');
+const boom = require('boom');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -48,6 +51,7 @@ app.get('/api', (req, res) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
+        res.status(200);
         res.json({ posts: records });
       }
     }
@@ -64,6 +68,14 @@ app.get('/api/:id', (req, res) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
+        if (isEmpty(records)) {
+          const err = boom.notFound('could not find!').output;
+          res.status(err.statusCode);
+          res.json(err.payload);
+
+          return;
+        }
+
         res.json(records);
       }
     }
@@ -97,6 +109,7 @@ app.delete('/api/:id', (req, res) => {
       if (err) {
         res.json({ status: 'erroed', err });
       } else {
+        res.status(204);
         res.json({ status: 'post deleted successfully' });
       }
     }
