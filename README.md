@@ -5,4 +5,5 @@ This repository contains the projects developed along of the [Udemy Node.JS Cour
 * News Portal
 * Multiroom chat using web sockets
 * MMORPG (will be refactored using updated mongo db package)
-* Content negotiation
+* Content Negotiation
+* API Restful Instagram
