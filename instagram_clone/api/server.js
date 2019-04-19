@@ -12,3 +12,8 @@ const port = 8080;
 app.listen(port);
 
 console.log('Server listening on ' + port);
+
+// Hello route
+app.get('/', (req, res) => {
+    res.send({ msg: 'hello' });
+})
