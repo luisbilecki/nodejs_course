@@ -7,6 +7,8 @@
 		
 		<!-- JQuery -->
 		<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="js/jquery.timeago.js" type="text/javascript"></script>
+    <script src="js/jquery.timeago.pt-br.js" type="text/javascript"></script>
 
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -16,6 +18,8 @@
 
 		<script>
 			$(document).ready(function() {
+        // Attach time ago on DOM ready
+        $('time.timeago').timeago();
 
 				function carrega_postagens() {
 					// criar xmlhttprequest
@@ -34,13 +38,32 @@
 											data[i].titulo,
 										'</span>',
                     '<img src="http://localhost:8080/api/imagens/' , data[i].url_imagem , '" />',
+										'<div class="comentarios" id="comentarios_' + data[i]._id + '"></div>',
                     '<div class="comentar">',
                       '<input type="text" class="form-control input_comentario" id="postagem_' + data[i]._id + '" placeholder="Adicione um comentário ..."/>',
 											'<button class="btn btn-default btn_postagem" value="' + data[i]._id + '" type="button">Comentar</button>',
                     '</div>',
 									'</div>'
                 ].join(''));
+
+                if(data[i].comentarios) {
+                  let comentarios = data[i].comentarios;
+
+                  for(let j = 0; j < comentarios.length; j++) {
+                    $('#comentarios_' + data[i]._id).append([
+                      '<div class="comentario">',
+                        '<div class="comentario texto">',
+                          comentarios[j].comentario,
+                        '</div>',
+                        '<div class="comentario time">',
+                          comentarios[j].ts ? $.timeago(new Date(comentarios[j].ts)) : '',
+                        '</div>',
+                      '</div>',
+                    ].join(''));
+                  }
+                }
               }              
+              
 
 							$('.btn_postagem').click(function(){
 								let id = this.value;

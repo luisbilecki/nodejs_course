@@ -88,10 +88,24 @@ body {
 	border-bottom: solid 1px #EFEFEF;
 }
 
-.txt_comentario {
-	display: block;
-	width:100%;
+.comentario {
+	display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 5px 0px;
 }
+
+.comentario .texto {
+  flex-basis: 85%;
+}
+
+.comentario .time {
+  flex-basis: 15%;
+  font-size: 10px;
+  color: #c2c2c2;
+}
+
+
 
 .btn_remover_postagem {
 	text-decoration: none;
