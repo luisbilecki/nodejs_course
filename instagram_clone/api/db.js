@@ -1,4 +1,5 @@
 const mongodb = require('mongodb').MongoClient;
+const objectID = require('mongodb').ObjectId;
 
 // TODO: env
 const dbName = 'instagram';

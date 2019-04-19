@@ -87,3 +87,18 @@ app.put('/api/:id', (req, res) => {
   });
 });
 
+// DELETE By id
+app.delete('/api/:id', (req, res) => {
+  connMongoDB({
+    operation: 'delete',
+    where: { _id: req.params.id },
+    collection: 'posts',
+    callback: function(err){
+      if (err) {
+        res.json({ status: 'erroed', err });
+      } else {
+        res.json({ status: 'post deleted successfully' });
+      }
+    }
+  });
+});
