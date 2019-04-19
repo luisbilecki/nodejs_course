@@ -36,3 +36,19 @@ app.post('/api', (req, res) => {
     }
   });
 });
+
+// GET (find)
+app.get('/api', (req, res) => {
+  connMongoDB({
+    operation: 'find',
+    reqData: {},
+    collection: 'posts',
+    callback: function(err, results){
+      if (err) {
+        res.json({ status: 'erroed', err });
+      } else {
+        res.json({ posts: results });
+      }
+    }
+  });
+});
